@@ -123,6 +123,27 @@ class OnlyYouMixin(UserPassesTestMixin):
     def test_func(self):
         user = self.request.user
         return user.pk == self.kwargs['pk'] or user.is_superuser
+    
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""    
+class OnlySuperuser(UserPassesTestMixin):
+    """スーパーユーザーだけに閲覧を許可する"""
+    raise_exception = True
+
+    def test_func(self):
+        user = self.request.user
+        return user.pk == user.is_superuser
+    
+class Mail(OnlySuperuser, generic.TemplateView):
+    '''メールの送信ページ'''
+    model = User
+    template_name = 'register/mail.html'
+        
+class DecisionNumbers(OnlySuperuser, generic.TemplateView):
+    '''毎月シフトの人数を決定するページ'''
+    model = User
+    templete_name = 'register/decision_numbers.html'
+        
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 class UserDetail(OnlyYouMixin, generic.DetailView):

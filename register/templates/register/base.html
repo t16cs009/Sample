@@ -40,6 +40,12 @@
           <li>
             <a class="nav-item nav-link" href="{% url 'register:password_change' %}">パスワードの変更</a>
           </li>
+          <li>
+            <a class="nav-item nav-link" href="{% url 'register:mail' %}">メール送信</a>
+          </li>
+          <li>
+            <a class="nav-item nav-link" href="{% url 'register:decision_numbers' %}">必要な人数を変更</a>
+          </li>
           {% else %} <!-- ユーザがログインしていない場合はこちら -->
           <li class="nav-item">
             <a class="nav-item nav-link" href="{% url 'register:login' %}"> <!-- register の urls.py の login への遷移 -->
