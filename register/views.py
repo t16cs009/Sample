@@ -210,3 +210,4 @@ class MonthWithScheduleCalendar(MonthWithScheduleMixin, generic.TemplateView):
         context = super().get_context_data(**kwargs)
         context['month'] = self.get_month_calendar()
         return context
+
