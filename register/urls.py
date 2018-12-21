@@ -24,7 +24,9 @@ urlpatterns = [
     path('month_with_schedule/',views.MonthWithScheduleCalendar.as_view(), name='month_with_schedule'),
     path('month_with_schedule/',views.MonthWithScheduleCalendar.as_view(), name='month_with_schedule'),
     path('month_with_schedule/<int:year>/<int:month>/',views.MonthWithScheduleCalendar.as_view(), name='month_with_schedule'),
-    path('mail/', views.Mail.as_view(), name='mail'),
-    path('decision_numbers/', views.DecisionNumbers.as_view(), name='decision_numbers'),
+    path('management/', views.Management.as_view(), name='management'),
+    path('management/decision_numbers/', views.DecisionNumbers.as_view(), name='decision_numbers'),
+    path('management/mail/', views.Mail.as_view(), name='mail'),
+    path('config/', views.Config.as_view(), name='config'),
     
 ]

@@ -115,7 +115,6 @@ class UserCreateComplete(generic.TemplateView):
 
         return HttpResponseBadRequest()
 
-
 class OnlyYouMixin(UserPassesTestMixin):
     """本人か、スーパーユーザーだけユーザーページアクセスを許可する"""
     raise_exception = True
@@ -124,28 +123,35 @@ class OnlyYouMixin(UserPassesTestMixin):
         user = self.request.user
         return user.pk == self.kwargs['pk'] or user.is_superuser
     
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""    
 class OnlySuperuser(UserPassesTestMixin):
+    """UserPassesTestMixin ログインし、特定のユーザにのみ表示を行なう"""
     """スーパーユーザーだけに閲覧を許可する"""
     raise_exception = True
 
     def test_func(self):
         user = self.request.user
-        return user.pk == user.is_superuser
+        return user.is_superuser
     
+class Management(OnlySuperuser, generic.TemplateView):
+    '''管理者の専用ページ'''
+    model = User
+    template_name = 'register/management.html'
+    
+class DecisionNumbers(OnlySuperuser, generic.TemplateView):
+    '''シフトの人数の調整ページ'''
+    model = User
+    template_name = 'register/decision_numbers.html'
+
 class Mail(OnlySuperuser, generic.TemplateView):
-    '''メールの送信ページ'''
+    '''メール送信ページ'''
     model = User
     template_name = 'register/mail.html'
-        
-class DecisionNumbers(OnlySuperuser, generic.TemplateView):
-    '''毎月シフトの人数を決定するページ'''
+
+class Config(generic.TemplateView):
+    '''設定を行なうページ'''
     model = User
-    templete_name = 'register/decision_numbers.html'
-        
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
+    template_name = 'register/config.html'
+            
 class UserDetail(OnlyYouMixin, generic.DetailView):
     """ユーザーの詳細ページ"""
     model = User
