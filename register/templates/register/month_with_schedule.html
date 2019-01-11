@@ -12,6 +12,7 @@
     }
 
 </style>
+   
 <a href="{% url 'register:month_with_schedule' month.previous.year month.previous.month %}">前月</a>
 {{ month.current | date:"Y年m月" }}
 <a href="{% url 'register:month_with_schedule' month.next.year month.next.month %}">次月</a>
@@ -26,25 +27,63 @@
   <tbody>
     {% for week in month.days %}
       <tr>
+        
         {% for day, schedules in week %}
+        
           {% if month.now == day %}
             <td class="table-success">
           {% else %}
             <td>
           {% endif %}
-
+         
           <div>
             {% if month.current.month != day.month %}
               {{ day | date:"m/d" }}
             {% else %}
               {{ day.day }}
+             
             {% endif %}
+ {% for s in schedules %}
+                           <!-- 1.モーダル表示のためのボタン -->
+<button class="btn btn-primary" data-toggle="modal" data-target="#modal-example">
+    詳細
+</button>
+<!-- 2.モーダルの配置 -->
+<div class="modal" id="modal-example" tabindex="-1">
+    <div class="modal-dialog">
 
+        <!-- 3.モーダルのコンテンツ -->
+        <div class="modal-content">
+            <!-- 4.モーダルのヘッダ -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modal-label">
+         {{ day | date:"m/d" }}
+                  </h4>
+            </div>
+            <!-- 5.モーダルのボディ -->
+            <div class="modal-body">
+               <p> {{ user.username }}</p>
+               <p>{{ s.summary }}</p>
+               <p> {{ s.start_time }} - {{ s.end_time }}</p>
+            </div>
+            <!-- 6.モーダルのフッタ -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+            </div>
+          </div>
+        </div>
+    </div>
+     {% endfor %}
             {% for schedule in schedules %}
                 <p>{{ user.username }}</p>
-            {% endfor %}
-          </div>
+     {% endfor %}
+     
+</div>
           </td>
+          
         {% endfor %}
       </tr>
     {% endfor %}
