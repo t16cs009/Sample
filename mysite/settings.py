@@ -136,3 +136,11 @@ LOGIN_REDIRECT_URL = 'register:top'
 
 # メールをコンソールに表示する
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+STATIC_URL = '/static/'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 't16cs049@gmail.com'  # 使用するgmailアカウント
+EMAIL_HOST_PASSWORD = 'ddvnhvomzdrvtbmd'     # 使用するgmailアカウントのパスワード
+EMAIL_PORT = 587
