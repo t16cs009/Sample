@@ -25,6 +25,11 @@ from django.shortcuts import redirect
 from django.views import generic
 from scalendar.forms import BS4ScheduleForm
 
+from django.core.mail import EmailMessage
+from django.http import HttpResponse
+# Create your views here.
+
+
 User = get_user_model()
 
 
@@ -211,3 +216,6 @@ class MonthWithScheduleCalendar(MonthWithScheduleMixin, generic.TemplateView):
         context['month'] = self.get_month_calendar()
         return context
 
+def index(request):
+   EmailMessage(u'件名', u'本文', to = ['sakamichi.214@gmail.com']).send()
+   return HttpResponse('Send your register email')
