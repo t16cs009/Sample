@@ -13,7 +13,7 @@
     {% for week in month.days %}
       <tr>
         {% for day in week %}
-          {% if month.now == day %}
+          {% if month.day == day %}
             <td class="table-success">
           {% else %}
             <td>
