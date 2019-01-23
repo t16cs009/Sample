@@ -13,10 +13,14 @@
     {% for week in month.days %}
       <tr>
         {% for day in week %}
-          {% if month.day == day %}
+          {% if month.now == day %}
             <td class="table-success">
           {% else %}
-            <td>
+            {% if selected_date == day %}
+              <td class="table-active">
+            {% else %}
+              <td>
+            {% endif %}
           {% endif %}
           <a href="{% url 'register:mycalendar' day.year day.month day.day %}">{{ day.day }}</a>
           </td>
