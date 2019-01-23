@@ -13,7 +13,6 @@ class Schedule(models.Model):
     created_at = models.DateTimeField('作成日', default=timezone.now)
     noon_numbers = models.IntegerField('昼シフト人数', default=0, blank=True)
     night_numbers = models.IntegerField('夜シフト人数', default=0, blank=True)
-    id = 'a'
-
+    
     def __str__(self):
         return self.summary

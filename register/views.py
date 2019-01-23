@@ -232,6 +232,8 @@ class PasswordResetConfirm(PasswordResetConfirmView):
 class PasswordResetComplete(PasswordResetCompleteView):
     """新パスワード設定しましたページ"""
     template_name = 'register/password_reset_complete.html'
+    
+    
 
 class MyCalendar(MonthCalendarMixin, WeekWithScheduleMixin, generic.CreateView):
     """月間カレンダー、週間カレンダー、スケジュール登録画面のある欲張りビュー"""
@@ -276,6 +278,8 @@ class MonthWithScheduleCalendar(MonthWithScheduleMixin, generic.TemplateView):
         context['month'] = self.get_month_calendar()
         return context
 
+
 def index(request):
    EmailMessage(u'件名', u'本文', to = ['sakamichi.214@gmail.com']).send()
    return HttpResponse('Send your register email')
+

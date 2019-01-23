@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+from scalendar import views as s_views 
 app_name = 'register'
 
 urlpatterns = [
@@ -20,6 +20,7 @@ urlpatterns = [
     path('password_reset/confirm/<uidb64>/<token>/', views.PasswordResetConfirm.as_view(), name='password_reset_confirm'),
     path('password_reset/complete/', views.PasswordResetComplete.as_view(), name='password_reset_complete'),
     path('mycalendar/', views.MyCalendar.as_view(), name='mycalendar'),
+    path('mycalendar/delete/<int:id>', s_views.delete, name='delete'),
     path('mycalendar/<int:year>/<int:month>/<int:day>/', views.MyCalendar.as_view(), name='mycalendar'),
     path('month_with_schedule/',views.MonthWithScheduleCalendar.as_view(), name='month_with_schedule'),
     path('month_with_schedule/',views.MonthWithScheduleCalendar.as_view(), name='month_with_schedule'),
