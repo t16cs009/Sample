@@ -65,7 +65,7 @@
             </div>
             <!-- 5.モーダルのボディ -->
             <div class="modal-body">
-               <p> {{ s.username }}</p>
+               <p> {{ s.user_name }}</p>
                <p>{{ s.summary }}</p>
                <p> {{ s.start_time }} - {{ s.end_time }}</p>
             </div>
@@ -78,7 +78,7 @@
     </div>
      {% endfor %}
             {% for schedule in schedules %}
-                <p>{{ s.username }}</p>
+                <p>{{ s.user_name }}</p>
      {% endfor %}
      
 </div>
