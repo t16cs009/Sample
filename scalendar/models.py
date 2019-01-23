@@ -11,6 +11,8 @@ class Schedule(models.Model):
     end_time = models.TimeField('終了時間', default=datetime.time(7, 0, 0))
     date = models.DateField('日付')
     created_at = models.DateTimeField('作成日', default=timezone.now)
+    noon_numbers = models.IntegerField('昼シフト人数', default=0, blank=True)
+    night_numbers = models.IntegerField('夜シフト人数', default=0, blank=True)
     id = 'a'
 
     def __str__(self):

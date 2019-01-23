@@ -4,7 +4,7 @@ from . import views
 app_name = 'register'
 
 urlpatterns = [
-    
+
     path('', views.Top.as_view(), name='top'), # register の view.py の class Top を参照
     path('login/', views.Login.as_view(), name='login'),
     path('logout/', views.Logout.as_view(), name='logout'),
@@ -31,6 +31,13 @@ urlpatterns = [
     path('management/decision_numbers/', views.DecisionNumbers.as_view(), name='decision_numbers'),
     path('management/mail/', views.Mail.as_view(), name='mail'),
     path('config/', views.Config.as_view(), name='config'),
+    path(
+        'month_with_forms/',
+        views.MonthWithFormsCalendar.as_view(), name='month_with_forms'
+    ),
+    path(
+        'month_with_forms/<int:year>/<int:month>/',
+        views.MonthWithFormsCalendar.as_view(), name='month_with_forms'
+    ),
 
-    
 ]

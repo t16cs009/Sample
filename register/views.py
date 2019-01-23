@@ -8,7 +8,7 @@ from django.contrib.auth.views import (
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.signing import BadSignature, SignatureExpired, loads, dumps
 from django.http import HttpResponseBadRequest
-from django.shortcuts import redirect, resolve_url
+from django.shortcuts import redirect, render, resolve_url
 from django.template.loader import get_template
 from django.urls import reverse_lazy
 from django.views import generic
@@ -23,10 +23,12 @@ from scalendar.views import (
 import datetime
 from django.shortcuts import redirect
 from django.views import generic
-from scalendar.forms import BS4ScheduleForm
+from scalendar.forms import BS4ScheduleForm, SimpleScheduleForm
 
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
+from register import mixins
+from scalendar.models import Schedule
 # Create your views here.
 
 
@@ -40,7 +42,7 @@ class Top(generic.TemplateView):
 class Login(LoginView):
     """ログインページ"""
     form_class = LoginForm # register の forms.py の LoginForm を設ける
-    template_name = 'register/login.html' 
+    template_name = 'register/login.html'
 
 
 class Logout(LoginRequiredMixin, LogoutView):
@@ -127,7 +129,7 @@ class OnlyYouMixin(UserPassesTestMixin):
     def test_func(self):
         user = self.request.user
         return user.pk == self.kwargs['pk'] or user.is_superuser
-    
+
 class OnlySuperuser(UserPassesTestMixin):
     """UserPassesTestMixin ログインし、特定のユーザにのみ表示を行なう"""
     """スーパーユーザーだけに閲覧を許可する"""
@@ -136,16 +138,37 @@ class OnlySuperuser(UserPassesTestMixin):
     def test_func(self):
         user = self.request.user
         return user.is_superuser
-    
+
 class Management(OnlySuperuser, generic.TemplateView):
     '''管理者の専用ページ'''
     model = User
     template_name = 'register/management.html'
-    
+
 class DecisionNumbers(OnlySuperuser, generic.TemplateView):
     '''シフトの人数の調整ページ'''
     model = User
     template_name = 'register/decision_numbers.html'
+
+class MonthWithFormsCalendar(mixins.MonthWithFormsMixin, generic.View):
+    """フォーム付きの月間カレンダーを表示するビュー"""
+    template_name='register/month_with_forms.html'
+    model = Schedule
+    date_field = 'date'
+    form_class = SimpleScheduleForm
+
+    def get(self, request, **kwargs):
+        context = self.get_month_calendar()
+        return render(request, self.template_name, context)
+
+    def post(self, request, **kwargs):
+        context = self.get_month_calendar()
+        formset = context['month_formset']
+        if formset.is_valid():
+            formset.save()
+            return redirect('register:month_with_forms')
+
+        return render(request, self.template_name, context)
+
 
 class Mail(OnlySuperuser, generic.TemplateView):
     '''メール送信ページ'''
@@ -156,7 +179,7 @@ class Config(generic.TemplateView):
     '''設定を行なうページ'''
     model = User
     template_name = 'register/config.html'
-            
+
 class UserDetail(OnlyYouMixin, generic.DetailView):
     """ユーザーの詳細ページ"""
     model = User
