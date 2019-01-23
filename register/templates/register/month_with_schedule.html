@@ -7,7 +7,7 @@
 
     td > div {
       height: 100px;
-      overflow: hidden;
+      overflow: auto;
       white-space: nowrap;
     }
 
@@ -60,6 +60,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="modal-label">
+                  <!--各スケジュール記入者に後で変更-->
+                  {{user.username}}の詳細
          {{ day | date:"m/d" }}
                   </h4>
             </div>

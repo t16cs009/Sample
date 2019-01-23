@@ -1,7 +1,12 @@
 import calendar
 from collections import deque
 import datetime
+from django.views import generic
 from .models import Schedule
+from django.contrib.messages.api import success
+from django.urls.base import reverse_lazy
+from scalendar.models import Schedule
+from django.shortcuts import render,redirect
 
 
 class BaseCalendarMixin:
@@ -159,3 +164,13 @@ class MonthWithScheduleMixin(MonthCalendarMixin):
         day_with_schedules = self.get_month_schedules(calendar_data['days'])
         calendar_data['days'] = day_with_schedules
         return calendar_data
+
+
+
+def delete(request,id):
+        print(request.GET.get('date'))
+        schedule = Schedule.objects.get(id=id)  
+        schedule.delete()
+        return redirect(to='register:mycalendar')
+
+        
