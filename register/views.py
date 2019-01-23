@@ -216,9 +216,18 @@ class MyCalendar(MonthCalendarMixin, WeekWithScheduleMixin, generic.CreateView):
     form_class = BS4ScheduleForm
 
     def get_context_data(self, **kwargs):
+        month = self.kwargs.get('month')
+        year = self.kwargs.get('year')
+        day = self.kwargs.get('day')
+        if month and year and day:
+            date = datetime.date(year=int(year), month=int(month), day=int(day))
+        else:
+            date = datetime.date.today()
+            
         context = super().get_context_data(**kwargs)
         context['week'] = self.get_week_calendar()
         context['month'] = self.get_month_calendar()
+        context['selected_date'] = date
         return context
 
     def form_valid(self, form):
