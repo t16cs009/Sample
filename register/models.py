@@ -94,3 +94,4 @@ if settings.AUTH_USER_MODEL == 'register.User':
         @property
         def username(self):
             return self.email
+

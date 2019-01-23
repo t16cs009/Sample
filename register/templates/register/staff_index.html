@@ -1,0 +1,41 @@
+{% extends "register/base.html" %}
+{% block content %}
+<p> スタッフのテーブルの表示 </p>
+{%for user in users %}
+<table class="table table-hover">
+    <tbody>
+        <tr class="clickable" data-toggle="collapse" href="#table-collapse{{user}}" aria-expanded="false" aria-controls="table-collapse{{user}}">
+            <th>ユーザー名</th>
+            <td>{{ user.username }}</td>
+        </tr>
+    </tbody>
+	<tbody class="collapse" id="table-collapse{{user}}">
+		<tr>
+			<th>E-mail</th>
+			<td>{{ user.email }}</td>
+		</tr>
+		<tr>
+			<th>姓</th>
+			<td>{{ user.last_name }}</td>
+		</tr>
+		<tr>
+			<th>名</th>
+			<td>{{ user.first_name }}</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td class="btn-toolbar float-right" role="toolbar">
+				<div class="btn-group mr-2">
+				<a class="btn btn-primary" type="button" href="{% url 'register:user_update' user.pk %}">編集</a>
+				</div>
+				<div class="btn-group">
+				<a class="btn btn-danger" type="button" href="{% url 'register:staff_delete' user.pk %}">削除</a>
+				</div>
+			</td>
+		</tr>
+    </tbody>
+</table>
+<br>
+{% endfor %}
+
+{% endblock %}

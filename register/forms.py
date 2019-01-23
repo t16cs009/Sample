@@ -48,7 +48,10 @@ class UserUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
-
+            
+class UserDeleteForm(forms.ModelForm):
+    """ユーザー情報削除フォーム"""
+    
 
 class MyPasswordChangeForm(PasswordChangeForm):
     """パスワード変更フォーム"""
@@ -75,3 +78,5 @@ class MySetPasswordForm(SetPasswordForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
+
+
