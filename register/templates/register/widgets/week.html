@@ -22,6 +22,7 @@
         {% for day_schedule_list in week.schedule_list %}
           <td>
             {% for s in day_schedule_list %}
+              {% if s.user_name == user.username %}
                 {{ s.start_time }} - {{ s.end_time }}<br>
                 {{ s.summary }}<br>
                 {{ s.description | linebreaks }}
@@ -32,7 +33,8 @@
     <input type="hidden" name="date" value="{{day.day}}">
     <input type="submit" name ="delete_button"value="削除">
 </form>
-              
+              {% endif %}
+
             {% endfor %}
           </td>
         {% endfor %}
