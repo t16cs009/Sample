@@ -239,6 +239,7 @@ class MyCalendar(MonthCalendarMixin, WeekWithScheduleMixin, generic.CreateView):
         else:
             date = datetime.date.today()
         schedule = form.save(commit=False)
+        schedule.user_name = self.request.user
         schedule.date = date
         schedule.save()
         return redirect('register:mycalendar', year=date.year, month=date.month, day=date.day)

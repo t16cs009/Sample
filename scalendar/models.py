@@ -5,6 +5,7 @@ from django.utils import timezone
 
 class Schedule(models.Model):
     """スケジュール"""
+    user_name = models.CharField('登録者', max_length=150)
     summary = models.CharField('備考', max_length=50, blank=True)
     start_time = models.TimeField('開始時間', default=datetime.time(7, 0, 0))
     end_time = models.TimeField('終了時間', default=datetime.time(7, 0, 0))
