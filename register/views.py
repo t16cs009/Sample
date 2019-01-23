@@ -24,6 +24,8 @@ import datetime
 from django.shortcuts import redirect
 from django.views import generic
 from scalendar.forms import BS4ScheduleForm
+from django.contrib.auth.models import User
+from django.shortcuts import render
 
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
@@ -31,7 +33,6 @@ from django.http import HttpResponse
 
 
 User = get_user_model()
-
 
 class Top(generic.TemplateView):
     template_name = 'register/top.html' # register の top.html を参照
@@ -156,6 +157,22 @@ class Config(generic.TemplateView):
     '''設定を行なうページ'''
     model = User
     template_name = 'register/config.html'
+
+class StaffIndex(generic.TemplateView):
+    '''スタッフの表示を行なうページ'''
+    model = User
+    template_name = 'register/staff_index.html'
+    
+    def get_context_data(self, **kwargs):
+        context =  generic.TemplateView.get_context_data(self, **kwargs)
+        context['users'] = User.objects.all()
+        return context
+
+class StaffDelete():
+    '''スタッフの削除を行なうページ'''
+    model = User
+    template_name = 'register/user_delete.html'
+ 
             
 class UserDetail(OnlyYouMixin, generic.DetailView):
     """ユーザーの詳細ページ"""
@@ -209,6 +226,7 @@ class PasswordResetConfirm(PasswordResetConfirmView):
 class PasswordResetComplete(PasswordResetCompleteView):
     """新パスワード設定しましたページ"""
     template_name = 'register/password_reset_complete.html'
+
 
 class MyCalendar(MonthCalendarMixin, WeekWithScheduleMixin, generic.CreateView):
     """月間カレンダー、週間カレンダー、スケジュール登録画面のある欲張りビュー"""
