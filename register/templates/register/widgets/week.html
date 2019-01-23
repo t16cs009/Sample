@@ -22,9 +22,11 @@
         {% for day_schedule_list in week.schedule_list %}
           <td>
             {% for s in day_schedule_list %}
+              {% if s.user_name == user.username %}
                 {{ s.start_time }} - {{ s.end_time }}<br>
                 {{ s.summary }}<br>
                 {{ s.description | linebreaks }}
+              {% endif %}
             {% endfor %}
           </td>
         {% endfor %}
