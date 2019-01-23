@@ -12,7 +12,7 @@
     }
 
 </style>
-   
+
 <a href="{% url 'register:month_with_schedule' month.previous.year month.previous.month %}">前月</a>
 {{ month.current | date:"Y年m月" }}
 <a href="{% url 'register:month_with_schedule' month.next.year month.next.month %}">次月</a>
@@ -27,21 +27,21 @@
   <tbody>
     {% for week in month.days %}
       <tr>
-        
+
         {% for day, schedules in week %}
-        
+
           {% if month.now == day %}
             <td class="table-success">
           {% else %}
             <td>
           {% endif %}
-         
+
           <div>
             {% if month.current.month != day.month %}
               {{ day | date:"m/d" }}
             {% else %}
               {{ day.day }}
-             
+
             {% endif %}
  {% for s in schedules %}
                            <!-- 1.モーダル表示のためのボタン -->
@@ -78,12 +78,14 @@
     </div>
      {% endfor %}
             {% for schedule in schedules %}
+                <p>{{ schedule.noon_numbers }}</p>
+                <p>{{ schedule.night_numbers }}</p>
                 <p>{{ s.user_name }}</p>
      {% endfor %}
-     
+
 </div>
           </td>
-          
+
         {% endfor %}
       </tr>
     {% endfor %}

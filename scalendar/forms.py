@@ -28,3 +28,19 @@ class BS4ScheduleForm(forms.ModelForm):
                 '終了時間は、開始時間よりも後にしてください'
             )
         return end_time
+
+class SimpleScheduleForm(forms.ModelForm):
+    """シンプルなスケジュール登録用フォーム"""
+
+    class Meta:
+        model = Schedule
+        fields = ('noon_numbers', 'night_numbers', 'date',)
+        widgets = {
+            'noon_numbers': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'night_numbers': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'date': forms.HiddenInput,
+        }
