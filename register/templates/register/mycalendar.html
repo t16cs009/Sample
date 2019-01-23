@@ -4,6 +4,7 @@
   <div class="col-md-3">
     {% include 'register/widgets/month.html' %}
     <hr>
+    <p>{{selected_date}}</p>
     <form action="" method="POST">
         {{ form.non_field_errors }}
         {% for field in form %}
