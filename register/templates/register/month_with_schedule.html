@@ -1,16 +1,14 @@
 {% extends 'register/base_calendar.html' %}
 {% block content %}
 <style>
-    table {
+	table {
         table-layout: fixed;
     }
-
     td > div {
       height: 100px;
-      overflow: hidden;
+      overflow: auto;
       white-space: nowrap;
     }
-
 </style>
 
 <a href="{% url 'register:month_with_schedule' month.previous.year month.previous.month %}">前月</a>
@@ -28,7 +26,7 @@
     {% for week in month.days %}
       <tr>
 
-        {% for day, schedules in week %}
+        {% for day, schedules, decisions in week %}
 
           {% if month.now == day %}
             <td class="table-success">
@@ -77,10 +75,13 @@
         </div>
     </div>
      {% endfor %}
-            {% for schedule in schedules %}
-                <p>{{ schedule.noon_numbers }}</p>
-                <p>{{ schedule.night_numbers }}</p>
-     {% endfor %}
+
+            {% for decision in decisions %}
+            	{% if forloop.last %}
+                	<p>{{ decision.noon_numbers }}</p>
+                	<p>{{ decision.night_numbers }}</p>
+                {% endif %}
+     		{% endfor %}
 
 </div>
           </td>

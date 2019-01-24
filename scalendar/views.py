@@ -1,7 +1,7 @@
 import calendar
 from collections import deque
 import datetime
-from .models import Schedule
+from .models import Schedule, Decision
 
 
 class BaseCalendarMixin:
@@ -134,7 +134,8 @@ class WeekWithScheduleMixin(WeekCalendarMixin):
 
 class MonthWithScheduleMixin(MonthCalendarMixin):
     """スケジュール付きの、月間カレンダーを提供するMixin"""
-    model = Schedule
+    model1 = Schedule
+    model2 = Decision
     date_field = 'date'
     order_field = 'start_time'
 
@@ -145,11 +146,12 @@ class MonthWithScheduleMixin(MonthCalendarMixin):
             week_list = []
             for day in week:
                 lookup = {self.date_field: day}
-                queryset = self.model.objects.filter(**lookup)
+                queryset1 = self.model1.objects.filter(**lookup)
+                queryset2 = self.model2.objects.filter(**lookup)
                 if self.order_field:
-                    queryset = queryset.order_by(self.order_field)
+                    queryset1 = queryset1.order_by(self.order_field)
                 week_list.append(
-                    (day, queryset)
+                    (day, queryset1, queryset2)
                 )
             day_with_schedules.append(week_list)
         return day_with_schedules

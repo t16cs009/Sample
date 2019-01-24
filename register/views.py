@@ -28,7 +28,7 @@ from scalendar.forms import BS4ScheduleForm, SimpleScheduleForm
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from register import mixins
-from scalendar.models import Schedule
+from scalendar.models import Schedule, Decision
 # Create your views here.
 
 
@@ -152,7 +152,7 @@ class DecisionNumbers(OnlySuperuser, generic.TemplateView):
 class MonthWithFormsCalendar(mixins.MonthWithFormsMixin, generic.View):
     """フォーム付きの月間カレンダーを表示するビュー"""
     template_name='register/month_with_forms.html'
-    model = Schedule
+    model = Decision
     date_field = 'date'
     form_class = SimpleScheduleForm
 
@@ -257,11 +257,14 @@ class MyCalendar(MonthCalendarMixin, WeekWithScheduleMixin, generic.CreateView):
         schedule.save()
         return redirect('register:mycalendar', year=date.year, month=date.month, day=date.day)
 
-class MonthWithScheduleCalendar(MonthWithScheduleMixin, generic.TemplateView):
+class MonthWithScheduleCalendar(MonthWithScheduleMixin, mixins.MonthWithScheduleMixin, generic.TemplateView):
     """スケジュール付きの月間カレンダーを表示するビュー"""
     template_name = 'register/month_with_schedule.html'
-
+    model = Decision
+    data_field = 'date'
+    
     def get_context_data(self, **kwargs):
+        context = super().get_context_data()
         context = super().get_context_data(**kwargs)
         context['month'] = self.get_month_calendar()
         return context

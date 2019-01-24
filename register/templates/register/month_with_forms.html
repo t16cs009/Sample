@@ -38,8 +38,14 @@
                             {{ day.day }}
                         {% endif %}
 
-                        {% for form in forms %}
-                            {{ form.as_p }}
+                       {% for form in forms %}
+                            {% if forloop.counter == 1 %}
+                                {{ form.as_p }}
+                            {% else %}
+                                {% for field in form %}
+                                    {{ field.as_hidden }}
+                                {% endfor %}
+                            {% endif %}
                         {% endfor %}
                     </div>
                     </td>

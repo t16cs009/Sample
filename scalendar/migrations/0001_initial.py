@@ -25,4 +25,14 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now, verbose_name='作成日')),
             ],
         ),
+
+        migrations.CreateModel(
+        name='Decision',
+            fields=[
+                ('date', models.DateField(verbose_name='日付')),
+                ('noon_numbers', models.IntegerField('昼シフト人数', default=0, blank=True)),
+                ('night_numbers', models.IntegerField('夜シフト人数', default=0, blank=True)),
+
+            ],
+        ),
     ]

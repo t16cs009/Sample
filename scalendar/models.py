@@ -10,10 +10,18 @@ class Schedule(models.Model):
     start_time = models.TimeField('開始時間', default=datetime.time(7, 0, 0))
     end_time = models.TimeField('終了時間', default=datetime.time(7, 0, 0))
     date = models.DateField('日付')
-    created_at = models.DateTimeField('作成日', default=timezone.now)
-    noon_numbers = models.IntegerField('昼シフト人数', default=0, blank=True)
-    night_numbers = models.IntegerField('夜シフト人数', default=0, blank=True)
+    # created_at = models.DateTimeField('作成日', default=timezone.now)
+    # noon_numbers = models.IntegerField('昼シフト人数', default=0, blank=True)
+    # night_numbers = models.IntegerField('夜シフト人数', default=0, blank=True)
     id = 'a'
 
     def __str__(self):
         return self.summary
+
+class Decision(models.Model):
+    date = models.DateField('日付')
+    noon_numbers = models.IntegerField('昼シフト人数', default=0, blank=True)
+    night_numbers = models.IntegerField('夜シフト人数', default=0, blank=True)
+
+    def __str__(self):
+        return models.Model.__str__(self)
