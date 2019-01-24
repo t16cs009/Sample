@@ -1,6 +1,10 @@
 {% extends "register/base.html" %}
 {% block content %}
-<p> スタッフのテーブルの表示 </p>
+<font size = "4">
+	<li>
+		<p>全スタッフ一覧 </p>
+	</li>
+</font>
 {%for user in users %}
 <table class="table table-hover">
     <tbody>
@@ -32,10 +36,13 @@
 				<a class="btn btn-danger" type="button" href="{% url 'register:staff_delete' user.pk %}">削除</a>
 				</div>
 			</td>
-		</tr>
     </tbody>
 </table>
 <br>
 {% endfor %}
-
+	<font size = "4">
+		<li>
+			<a class="nav-item nav-link" href="{% url 'register:user_create' %}">ユーザの追加</a>
+		</li>
+	</font>
 {% endblock %}
