@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+from .models import EmailText
 
 class LoginForm(AuthenticationForm):
     """ログインフォーム"""
@@ -80,3 +81,29 @@ class MySetPasswordForm(SetPasswordForm):
             field.widget.attrs['class'] = 'form-control'
 
 
+class EmailTextForm(forms.ModelForm):
+    """Bootstrapに対応するためのModelForm"""
+
+    class Meta:
+        model = EmailText
+        fields = ('summary', 'start_time', 'end_time')
+        widgets = {
+            'summary': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'start_time': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'end_time': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+        }
+
+    def clean_end_time(self):
+        start_time = self.cleaned_data['start_time']
+        end_time = self.cleaned_data['end_time']
+        if end_time <= start_time:
+            raise forms.ValidationError(
+                '終了時間は、開始時間よりも後にしてください'
+            )
+        return end_time

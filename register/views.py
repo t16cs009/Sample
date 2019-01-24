@@ -14,7 +14,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from .forms import (
     LoginForm, UserCreateForm, UserUpdateForm, MyPasswordChangeForm,
-    MyPasswordResetForm, MySetPasswordForm
+    MyPasswordResetForm, MySetPasswordForm, EmailTextForm
 )
 from scalendar.views import (
     MonthCalendarMixin, WeekCalendarMixin,
@@ -172,10 +172,40 @@ class MonthWithFormsCalendar(mixins.MonthWithFormsMixin, generic.View):
         return render(request, self.template_name, context)
 
 
-class Mail(OnlySuperuser, generic.TemplateView):
+class Mail(OnlySuperuser, MonthCalendarMixin, WeekWithScheduleMixin, generic.CreateView):
     '''メール送信ページ'''
     model = User
     template_name = 'register/mail.html'
+    
+    form_class = EmailTextForm
+    
+    def get_context_data(self, **kwargs):
+        month = self.kwargs.get('month')
+        year = self.kwargs.get('year')
+        day = self.kwargs.get('day')
+        if month and year and day:
+            date = datetime.date(year=int(year), month=int(month), day=int(day))
+        else:
+            date = datetime.date.today()
+            
+        context = super().get_context_data(**kwargs)
+        context['week'] = self.get_week_calendar()
+        context['month'] = self.get_month_calendar()
+        context['selected_date'] = date
+        return context
+    
+    def form_valid(self, form):
+        month = self.kwargs.get('month')
+        year = self.kwargs.get('year')
+        day = self.kwargs.get('day')
+        if month and year and day:
+            date = datetime.date(year=int(year), month=int(month), day=int(day))
+        else:
+            date = datetime.date.today()
+        schedule = form.save(commit=False)
+        schedule.date = date
+        schedule.save()
+        return redirect('register:mail', year=date.year, month=date.month, day=date.day)
 
 class Config(generic.TemplateView):
     '''設定を行なうページ'''
