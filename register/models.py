@@ -7,13 +7,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.base_user import BaseUserManager
 
-import datetime
 class EmailText(models.Model):
     """スケジュール"""
     user_name = models.CharField('登録者', max_length=150)
     summary = models.CharField('備考', max_length=50, blank=True)
-    start_time = models.TimeField('開始時間', default=datetime.time(7, 0, 0))
-    end_time = models.TimeField('終了時間', default=datetime.time(7, 0, 0))
+    description = models.TextField('Text', blank=True)
     date = models.DateField('日付')
     created_at = models.DateTimeField('作成日', default=timezone.now)
     noon_numbers = models.IntegerField('昼シフト人数', default=0, blank=True)

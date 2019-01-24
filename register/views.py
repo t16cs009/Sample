@@ -204,7 +204,8 @@ class Mail(OnlySuperuser, MonthCalendarMixin, WeekWithScheduleMixin, generic.Cre
             date = datetime.date.today()
         schedule = form.save(commit=False)
         schedule.date = date
-        schedule.save()
+        for staff in User.objects.all():
+            EmailMessage(str(schedule.date) + 'kiknkyuu', schedule.description +'', to = [staff.email]).send()
         return redirect('register:mail', year=date.year, month=date.month, day=date.day)
 
 class Config(generic.TemplateView):
