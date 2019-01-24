@@ -41,17 +41,19 @@
     </tr>
   </thead>
   <tbody>
+
     {% for week in month.days %}
       <tr>
 
         {% for day, schedules in week %}
-
+       
           {% if month.now == day %}
             <td class="table-success">
-          {% else %}
-            <td>
-          {% endif %}
-
+          {% else %}        
+              <td> 
+          {% endif %} 
+          
+        
           <div>
             {% if month.current.month != day.month %}
               {{ day | date:"m/d" }}
@@ -59,6 +61,9 @@
               {{ day.day }}
 
             {% endif %}
+            
+            
+
  {% for s in schedules %}
  <br>
                            <!-- 1.モーダル表示のためのボタン -->
@@ -104,11 +109,10 @@
     </div>
     </br>
      {% endfor %}
-            {% for schedule in schedules %}
-
-                <p>{{ s.user_name }}</p>
-     {% endfor %}
-
+            <!--{% for schedule in schedules %}
+                <p>{{ schedule.user_name }}</p>
+     {% endfor %}-->
+     
 </div>
           </td>
 
