@@ -87,7 +87,7 @@ class EmailTextForm(forms.ModelForm):
             'summary': forms.TextInput(attrs={
                 'class': 'form-control',
             }),
-            'description': forms.TextInput(attrs={
+            'description': forms.Textarea(attrs={
                 'class': 'form-control',
             }),
         }
