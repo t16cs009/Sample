@@ -9,13 +9,9 @@ from django.contrib.auth.base_user import BaseUserManager
 
 class EmailText(models.Model):
     """スケジュール"""
-    user_name = models.CharField('登録者', max_length=150)
-    summary = models.CharField('備考', max_length=50, blank=True)
-    description = models.TextField('Text', blank=True)
+    summary = models.CharField('件名', max_length=50, blank=True)
+    description = models.TextField('本文', blank=True)
     date = models.DateField('日付')
-    created_at = models.DateTimeField('作成日', default=timezone.now)
-    noon_numbers = models.IntegerField('昼シフト人数', default=0, blank=True)
-    night_numbers = models.IntegerField('夜シフト人数', default=0, blank=True)
     
     def __str__(self):
         return self.summary

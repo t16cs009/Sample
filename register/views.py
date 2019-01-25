@@ -205,7 +205,7 @@ class Mail(OnlySuperuser, MonthCalendarMixin, WeekWithScheduleMixin, generic.Cre
         schedule = form.save(commit=False)
         schedule.date = date
         for staff in User.objects.all():
-            EmailMessage(str(schedule.date) + 'kiknkyuu', schedule.description +'', to = [staff.email]).send()
+            EmailMessage('緊急メール:' + str(schedule.date), schedule.description + '', to = [staff.email]).send()
         return redirect('register:mail', year=date.year, month=date.month, day=date.day)
 
 class Config(generic.TemplateView):
@@ -332,9 +332,4 @@ class MonthWithScheduleCalendar(MonthWithScheduleMixin, mixins.MonthWithSchedule
         context = super().get_context_data(**kwargs)
         context['month'] = self.get_month_calendar()
         return context
-
-
-def index(request):
-   EmailMessage(u'件名', u'本文', to = ['sakamichi.214@gmail.com']).send()
-   return HttpResponse('Send your register email')
 
