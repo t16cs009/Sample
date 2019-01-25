@@ -11,7 +11,7 @@
     {{ month_current | date:"Y年m月" }}
     <a href="{% url 'register:month_with_forms' month_next.year month_next.month %}">次月</a>
 
-    <form action="" method="POST">
+    <form name="form" action="" method="POST">
         {{ month_formset.management_form }}
         <table class="table">
             <thead>
@@ -40,7 +40,7 @@
 
                        {% for form in forms %}
                             {% if forloop.counter == 1 %}
-                                {{ form.as_p }}
+                              {{ form.as_p }}
                             {% else %}
                                 {% for field in form %}
                                     {{ field.as_hidden }}
