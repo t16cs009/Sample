@@ -177,10 +177,6 @@ class Mail(OnlySuperuser, generic.TemplateView):
     model = User
     template_name = 'register/mail.html'
 
-class Config(generic.TemplateView):
-    '''設定を行なうページ'''
-    model = User
-    template_name = 'register/config.html'
 
 class StaffIndex(generic.TemplateView):
     '''スタッフの表示を行なうページ'''
