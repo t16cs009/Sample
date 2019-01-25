@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+from .models import EmailText
 
 class LoginForm(AuthenticationForm):
     """ログインフォーム"""
@@ -76,3 +77,17 @@ class MySetPasswordForm(SetPasswordForm):
             field.widget.attrs['class'] = 'form-control'
 
 
+class EmailTextForm(forms.ModelForm):
+    """Bootstrapに対応するためのModelForm"""
+
+    class Meta:
+        model = EmailText
+        fields = ('summary', 'description')
+        widgets = {
+            'summary': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'description': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+        }

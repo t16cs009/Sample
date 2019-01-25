@@ -1,4 +1,24 @@
-{% extends "register/base.html" %}
+{% extends 'register/base_calendar.html' %}
 {% block content %}
-<p> mailを送信するための画面（仮）</p>
+<div class="row">
+  <div class="col-md-3">
+    {% include 'register/widgets/month_email.html' %}
+    <hr>
+    <p>{{selected_date}}</p>
+    <form action="" method="POST">
+        {{ form.non_field_errors }}
+        {% for field in form %}
+        <div class="form-group row">
+            <label for="{{ field.id_for_label }}" class="col-sm-4 col-form-label">{{ field.label_tag }}</label>
+            <div class="col-sm-8">
+              {{ field }}
+              {{ field.errors }}
+            </div>
+        </div>
+        {% endfor %}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary btn-block">送信</button>
+    </form>
+  </div>
+</div>
 {% endblock %}

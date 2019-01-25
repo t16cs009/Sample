@@ -7,6 +7,19 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.base_user import BaseUserManager
 
+class EmailText(models.Model):
+    """スケジュール"""
+    user_name = models.CharField('登録者', max_length=150)
+    summary = models.CharField('備考', max_length=50, blank=True)
+    description = models.TextField('Text', blank=True)
+    date = models.DateField('日付')
+    created_at = models.DateTimeField('作成日', default=timezone.now)
+    noon_numbers = models.IntegerField('昼シフト人数', default=0, blank=True)
+    night_numbers = models.IntegerField('夜シフト人数', default=0, blank=True)
+    
+    def __str__(self):
+        return self.summary
+
 # registerのUserモデルを使う場合だけ、登録する
 if settings.AUTH_USER_MODEL == 'register.User':
     class UserManager(BaseUserManager):

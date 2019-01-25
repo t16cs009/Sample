@@ -31,6 +31,7 @@ urlpatterns = [
     path('management/', views.Management.as_view(), name='management'),
     path('management/decision_numbers/', views.DecisionNumbers.as_view(), name='decision_numbers'),
     path('management/mail/', views.Mail.as_view(), name='mail'),
+    path('management/mail/<int:year>/<int:month>/<int:day>/', views.Mail.as_view(), name='mail'),
     path('config/', views.Config.as_view(), name='config'),
     path(
         'month_with_forms/',
