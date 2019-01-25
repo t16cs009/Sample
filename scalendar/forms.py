@@ -1,5 +1,5 @@
 from django import forms
-from .models import Schedule
+from .models import Schedule, Decision
 
 
 class BS4ScheduleForm(forms.ModelForm):
@@ -33,7 +33,7 @@ class SimpleScheduleForm(forms.ModelForm):
     """シンプルなスケジュール登録用フォーム"""
 
     class Meta:
-        model = Schedule
+        model = Decision
         fields = ('noon_numbers', 'night_numbers', 'date',)
         widgets = {
             'noon_numbers': forms.TextInput(attrs={
