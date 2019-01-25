@@ -1,13 +1,17 @@
 {% extends "register/base.html" %} <!-- register の base.html からの拡張。よって、 register の base.html を参照する -->
 {% block content %}
-<p> 管理者ページになる予定（仮）</p>
+<font size = "4">
 	<li>
 		<a class="nav-item nav-link" href="{% url 'register:month_with_forms' %}">必要な人数を変更</a>
 	</li>
+	<hr>
     <li>
 		<a class="nav-item nav-link" href="{% url 'register:mail' %}">緊急メールを送信</a>
 	</li>
+	<hr>
 	<li>
 		<a class="nav-item nav-link" href="{% url 'register:staff_index' %}">スタッフの編集・追加</a>
 	</li>
+	<hr>
+	</font>
 {% endblock %}
