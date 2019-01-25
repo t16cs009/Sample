@@ -192,11 +192,13 @@ class StaffIndex(generic.TemplateView):
         context['users'] = User.objects.all()
         return context
 
-class StaffDelete():
-    '''スタッフの削除を行なうページ'''
+class StaffDelete(OnlySuperuser, generic.DeleteView):
+    '''メール送信ページ'''
     model = User
-    template_name = 'register/user_delete.html'
- 
+    form_class = UserUpdateForm
+    template_name = 'register/staff_delete.html'
+    success_url = reverse_lazy('register:staff_index')
+    
 
 class UserDetail(OnlyYouMixin, generic.DetailView):
     """ユーザーの詳細ページ"""

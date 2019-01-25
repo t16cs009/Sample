@@ -1,4 +1,48 @@
 {% extends "register/base.html" %}
 {% block content %}
-<p> スタッフの削除 </p>
+<br><br>
+<table class="table">
+    <tbody>
+        <tr>
+            <th>ユーザー名</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        		<tr>
+			<th>E-mail</th>
+			<td>{{ user.email }}</td>
+		</tr>
+		<tr>
+			<th>姓</th>
+			<td>{{ user.last_name }}</td>
+		</tr>
+		<tr>
+			<th>名</th>
+			<td>{{ user.first_name }}</td>
+		</tr>
+		<tr>
+    </tbody>
+</table>
+<br>
+<font size = "4">
+	<b>
+		<p>このユーザの情報を削除しますか?</p>
+	</b>
+</font>
+<div class = "btn-toolbar" role="toolbar">
+	<div class="btn-group mr-2">
+		<a class="btn btn-primary" type="button" href="{% url 'register:staff_index' %}">いいえ</a>
+	</div>
+	<div class="btn-group">
+		<form action="{% url 'register:staff_delete' user.pk %}" method="POST">
+		<button type="submit" class="btn btn-danger">はい</button>
+		{% for field in form %}
+		{{field.as_hidden}}
+		{%endfor%}
+		{% csrf_token %}
+		</form>
+	</div>
+</div>
 {% endblock %}
+
+		
+		

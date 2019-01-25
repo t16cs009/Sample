@@ -42,7 +42,7 @@ urlpatterns = [
     ),
     
     path('staff_index/', views.StaffIndex.as_view(), name='staff_index'),
-    path('staff_delete/<int:pk>', views.StaffDelete, name='staff_delete'),
+    path('staff_delete/<int:pk>', views.StaffDelete.as_view(), name='staff_delete'),
    
 
 ]
