@@ -212,7 +212,7 @@ class Mail(OnlySuperuser, MonthCalendarMixin, WeekWithScheduleMixin, generic.Cre
         return redirect('register:mail', year=date.year, month=date.month, day=date.day)
 
 
-class StaffIndex(generic.TemplateView):
+class StaffIndex(OnlySuperuser,generic.TemplateView):
     '''スタッフの表示を行なうページ'''
     model = User
     template_name = 'register/staff_index.html'

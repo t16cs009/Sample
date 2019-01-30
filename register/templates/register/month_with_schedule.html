@@ -1,5 +1,7 @@
 {% extends 'register/base_calendar.html' %}
 {% block content %}
+<script>
+</script>
 <style>
 	table {
         table-layout: fixed;
@@ -46,14 +48,14 @@
 
 
         {% for day, schedules, decisions in week %}
-       
+
           {% if month.now == day %}
-            <td class="table-success">
-          {% else %}        
-              <td> 
-          {% endif %} 
-          
-        
+            <td class = "table-success">
+          {% else %}
+          	<td>
+          {% endif %}
+
+
           <div>
             {% if month.current.month != day.month %}
               {{ day | date:"m/d" }}
@@ -61,8 +63,8 @@
               {{ day.day }}
 
             {% endif %}
-            
-            
+
+
 
  {% for s in schedules %}
  <br>
