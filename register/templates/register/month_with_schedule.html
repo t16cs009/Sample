@@ -51,8 +51,52 @@
 
           {% if month.now == day %}
             <td class = "table-success">
+
           {% else %}
-          	<td>
+          	<td id = "{{day}}">
+
+          	<script>
+
+            var noon = 0;
+            var night = 0;
+
+            var decision_noon = 0;
+            var decision_night = 0;
+
+            {% for s in schedules %}
+            	{% if s.start_time >= s.night_start_time %}
+            		night++;
+            	{% else %}
+            		noon++;
+            	{% endif %}
+            {% endfor %}
+
+            {% for decision in decisions %}
+            	{% if forloop.last %}
+                	decision_noon = {{ decision.noon_numbers }};
+                	decision_night = {{ decision.night_numbers }};
+                {% endif %}
+     		{% endfor %}
+
+			var month = {{day.month}} // 対象の月
+			var day = {{day.day}} // 対象の日
+
+			if(month == {{month.next.month}}){
+
+            	if(decision_noon > noon || decision_night > night)
+            		document.getElementById("{{day}}").className = "table-danger";
+
+			}
+
+			if(month == {{month.current.month}} && {{month.now.day}} < day){
+
+				if(decision_noon > noon || decision_night > night)
+            		document.getElementById("{{day}}").className = "table-danger";
+
+			}
+
+            </script>
+
           {% endif %}
 
 
