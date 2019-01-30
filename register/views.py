@@ -178,7 +178,7 @@ class Mail(OnlySuperuser, generic.TemplateView):
     template_name = 'register/mail.html'
 
 
-class StaffIndex(generic.TemplateView):
+class StaffIndex(OnlySuperuser,generic.TemplateView):
     '''スタッフの表示を行なうページ'''
     model = User
     template_name = 'register/staff_index.html'
