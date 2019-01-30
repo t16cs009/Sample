@@ -21,6 +21,7 @@ from scalendar.views import (
     WeekWithScheduleMixin, MonthWithScheduleMixin
 )
 import datetime
+import calendar
 from django.shortcuts import redirect
 from django.views import generic
 from scalendar.forms import BS4ScheduleForm, SimpleScheduleForm
@@ -160,6 +161,8 @@ class MonthWithFormsCalendar(mixins.MonthWithFormsMixin, generic.View):
 
     def get(self, request, **kwargs):
         context = self.get_month_calendar()
+        # last_date = calendar.monthrange(context['month']['current'].year, context['month']['current'].month)[1]
+
         return render(request, self.template_name, context)
 
     def post(self, request, **kwargs):
@@ -176,9 +179,9 @@ class Mail(OnlySuperuser, MonthCalendarMixin, WeekWithScheduleMixin, generic.Cre
     '''メール送信ページ'''
     model = User
     template_name = 'register/mail.html'
-    
+
     form_class = EmailTextForm
-    
+
     def get_context_data(self, **kwargs):
         month = self.kwargs.get('month')
         year = self.kwargs.get('year')
@@ -187,13 +190,13 @@ class Mail(OnlySuperuser, MonthCalendarMixin, WeekWithScheduleMixin, generic.Cre
             date = datetime.date(year=int(year), month=int(month), day=int(day))
         else:
             date = datetime.date.today()
-            
+
         context = super().get_context_data(**kwargs)
         context['week'] = self.get_week_calendar()
         context['month'] = self.get_month_calendar()
         context['selected_date'] = date
         return context
-    
+
     def form_valid(self, form):
         month = self.kwargs.get('month')
         year = self.kwargs.get('year')
@@ -217,7 +220,7 @@ class StaffIndex(generic.TemplateView):
     '''スタッフの表示を行なうページ'''
     model = User
     template_name = 'register/staff_index.html'
-    
+
     def get_context_data(self, **kwargs):
         context =  generic.TemplateView.get_context_data(self, **kwargs)
         context['users'] = User.objects.all()
@@ -229,7 +232,7 @@ class StaffDelete(OnlySuperuser, generic.DeleteView):
     form_class = UserUpdateForm
     template_name = 'register/staff_delete.html'
     success_url = reverse_lazy('register:staff_index')
-    
+
 
 class UserDetail(OnlyYouMixin, generic.DetailView):
     """ユーザーの詳細ページ"""
@@ -283,8 +286,8 @@ class PasswordResetConfirm(PasswordResetConfirmView):
 class PasswordResetComplete(PasswordResetCompleteView):
     """新パスワード設定しましたページ"""
     template_name = 'register/password_reset_complete.html'
-    
-    
+
+
 
 
 class MyCalendar(MonthCalendarMixin, WeekWithScheduleMixin, generic.CreateView):
@@ -300,7 +303,7 @@ class MyCalendar(MonthCalendarMixin, WeekWithScheduleMixin, generic.CreateView):
             date = datetime.date(year=int(year), month=int(month), day=int(day))
         else:
             date = datetime.date.today()
-            
+
         context = super().get_context_data(**kwargs)
         context['week'] = self.get_week_calendar()
         context['month'] = self.get_month_calendar()
@@ -326,7 +329,7 @@ class MonthWithScheduleCalendar(MonthWithScheduleMixin, mixins.MonthWithSchedule
     template_name = 'register/month_with_schedule.html'
     model = Decision
     data_field = 'date'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context = super().get_context_data(**kwargs)

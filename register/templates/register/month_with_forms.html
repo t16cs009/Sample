@@ -1,16 +1,48 @@
 {% extends 'register/base_calendar.html' %}
 {% block content %}
+    <script>
+    	function insert(){
+
+			num = main_num.text.value;
+
+    		var sum_day = {{ month_day_forms | length }};
+
+    		var sum_form = 0;
+
+    		{% for week_day_forms in month_day_forms %}
+    			{% for day, forms in week_day_forms.items %}
+					sum_form = sum_form + {{ forms | length }};
+				{% endfor %}
+			{% endfor %}
+
+			sum_day = sum_day * 7; // 表示しているフォーム(フォームの数)
+
+			sum_form = sum_form - 35;
+
+    		for(i = sum_form; i < sum_form + sum_day; i++){
+				var noon = 'id_form-'+ i +'-noon_numbers';
+    			var night = 'id_form-'+ String(i) +'-night_numbers';
+
+   				document.getElementById(noon).value = num;
+   				document.getElementById(night).value = num;
+    		}
+
+    	}
+    </script>
+
     <style>
         table {
             table-layout: fixed;
         }
-
     </style>
 
     <a href="{% url 'register:month_with_forms' month_previous.year month_previous.month %}">前月</a>
     {{ month_current | date:"Y年m月" }}
     <a href="{% url 'register:month_with_forms' month_next.year month_next.month %}">次月</a>
-
+	<form align = "right" name="main_num" action = "">
+		<input type = "text" name = "text">
+		<input align = "right" class="button" type="button" value="一括送信" onclick="insert()">
+	</form>
     <form name="form" action="" method="POST">
         {{ month_formset.management_form }}
         <table class="table">
@@ -40,7 +72,7 @@
 
                        {% for form in forms %}
                             {% if forloop.counter == 1 %}
-                              {{ form.as_p }}
+                            	{{ form.as_p }}
                             {% else %}
                                 {% for field in form %}
                                     {{ field.as_hidden }}
