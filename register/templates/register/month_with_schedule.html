@@ -78,21 +78,17 @@
                 {% endif %}
      		{% endfor %}
 
+			var year = {{day.year}} // 対象の年
 			var month = {{day.month}} // 対象の月
 			var day = {{day.day}} // 対象の日
 
-			if(month == {{month.next.month}}){
-
-            	if(decision_noon > noon || decision_night > night)
-            		document.getElementById("{{day}}").className = "table-danger";
-
-			}
-
-			if(month == {{month.current.month}} && {{month.now.day}} < day){
+			if({{month.now.year}} <= year && {{month.now.month}} <= month){
+			 if({{month.now.month}} < month || {{month.now.day}} < day){
 
 				if(decision_noon > noon || decision_night > night)
             		document.getElementById("{{day}}").className = "table-danger";
 
+				}
 			}
 
             </script>
@@ -156,19 +152,6 @@
     </br>
      {% endfor %}
 
-            {% for schedule in schedules %}
-                <p>{{ schedule.noon_numbers }}</p>
-                <p>{{ schedule.night_numbers }}</p>
-                <p>{{ s.user_name }}</p>
-     {% endfor %}
-
-
-            {% for decision in decisions %}
-            	{% if forloop.last %}
-                	<p>{{ decision.noon_numbers }}</p>
-                	<p>{{ decision.night_numbers }}</p>
-                {% endif %}
-     		{% endfor %}
 
 
 
