@@ -102,18 +102,20 @@
             </div>
             <!-- 6.モーダルのフッタ -->
             <div class="modal-footer">
+              <!--削除ボタンを設置 -->
+              {% if superuser %}
+<form method="GET" action="{% url 'register:delete' s.id%}" >
+    {% csrf_token %}
+    <input type="hidden" name="date" value="{{day.day}}">
+    <input type="submit" class ="btn btn-danger"name ="delete_button"value="削除" onclick='return confirm("本当に削除しますか？");'>
+</form>
+{% endif %}
                 <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
             </div>
           </div>
         </div>
     </div>
     </br>
-     {% endfor %}
-
-            {% for schedule in schedules %}
-                <p>{{ schedule.noon_numbers }}</p>
-                <p>{{ schedule.night_numbers }}</p>
-                <p>{{ s.user_name }}</p>
      {% endfor %}
 
 

@@ -292,6 +292,8 @@ class MyCalendar(MonthCalendarMixin, WeekWithScheduleMixin, generic.CreateView):
     form_class = BS4ScheduleForm
 
     def get_context_data(self, **kwargs):
+        user = self.request.user
+        
         month = self.kwargs.get('month')
         year = self.kwargs.get('year')
         day = self.kwargs.get('day')
@@ -304,6 +306,7 @@ class MyCalendar(MonthCalendarMixin, WeekWithScheduleMixin, generic.CreateView):
         context['week'] = self.get_week_calendar()
         context['month'] = self.get_month_calendar()
         context['selected_date'] = date
+        context['superuser'] = user.is_superuser
         return context
 
     def form_valid(self, form):
@@ -327,8 +330,11 @@ class MonthWithScheduleCalendar(MonthWithScheduleMixin, mixins.MonthWithSchedule
     data_field = 'date'
 
     def get_context_data(self, **kwargs):
+        user = self.request.user
+        
         context = super().get_context_data()
         context = super().get_context_data(**kwargs)
         context['month'] = self.get_month_calendar()
+        context['superuser'] = user.is_superuser
         return context
 

@@ -176,3 +176,8 @@ def delete(request,id):
         schedule.delete()
         return redirect(to='register:mycalendar')
 
+def delete_m(request,id):
+        print(request.GET.get('date'))
+        schedule = Schedule.objects.get(id=id)
+        schedule.delete()
+        return redirect(to='register:month_with_schedule')

@@ -22,10 +22,9 @@
         {% for day_schedule_list in week.schedule_list %}
           <td>
             {% for s in day_schedule_list %}
-              {% if s.user_name == user.username %}
-                {{ s.start_time }} - {{ s.end_time }}<br>
+              {% if s.user_name == user.username or superuser %}
+                {{s.user_name}} : {{ s.start_time }} - {{ s.end_time }}<br>
                 {{ s.summary }}<br>
-                {{ s.description | linebreaks }}
 
             <!--削除ボタンを設置 -->
 <form method="GET" action="{% url 'register:delete' s.id%}" >
