@@ -58,6 +58,8 @@ class MonthCalendarMixin(BaseCalendarMixin):
             month = datetime.date.today().replace(day=1)
         return month
 
+
+
     def get_month_calendar(self):
         """月間カレンダー情報の入った辞書を返す"""
         self.setup()
