@@ -1,5 +1,7 @@
 {% extends 'register/base_calendar.html' %}
 {% block content %}
+<script>
+</script>
 <style>
 	table {
         table-layout: fixed;
@@ -46,14 +48,54 @@
 
 
         {% for day, schedules, decisions in week %}
-       
+
           {% if month.now == day %}
-            <td class="table-success">
-          {% else %}        
-              <td> 
-          {% endif %} 
-          
-        
+            <td class = "table-success">
+
+          {% else %}
+          	<td id = "{{day}}">
+
+          	<script>
+
+            var noon = 0;
+            var night = 0;
+
+            var decision_noon = 0;
+            var decision_night = 0;
+
+            {% for s in schedules %}
+            	{% if s.start_time >= s.night_start_time %}
+            		night++;
+            	{% else %}
+            		noon++;
+            	{% endif %}
+            {% endfor %}
+
+            {% for decision in decisions %}
+            	{% if forloop.last %}
+                	decision_noon = {{ decision.noon_numbers }};
+                	decision_night = {{ decision.night_numbers }};
+                {% endif %}
+     		{% endfor %}
+
+			var year = {{day.year}} // 対象の年
+			var month = {{day.month}} // 対象の月
+			var day = {{day.day}} // 対象の日
+
+			if({{month.now.year}} <= year && {{month.now.month}} <= month){
+			 if({{month.now.month}} < month || {{month.now.day}} < day){
+
+				if(decision_noon > noon || decision_night > night)
+            		document.getElementById("{{day}}").className = "table-danger";
+
+				}
+			}
+
+            </script>
+
+          {% endif %}
+
+
           <div>
             {% if month.current.month != day.month %}
               {{ day | date:"m/d" }}
@@ -61,8 +103,8 @@
               {{ day.day }}
 
             {% endif %}
-            
-            
+
+
 
  {% for s in schedules %}
  <br>
@@ -119,12 +161,6 @@
      {% endfor %}
 
 
-            {% for decision in decisions %}
-            	{% if forloop.last %}
-                	<p>{{ decision.noon_numbers }}</p>
-                	<p>{{ decision.night_numbers }}</p>
-                {% endif %}
-     		{% endfor %}
 
 
 
